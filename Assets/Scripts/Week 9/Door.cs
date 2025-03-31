@@ -14,6 +14,7 @@ public class Door : MonoBehaviour
 
     protected float timer;
     public float doorOpenInterval = 2.5f;
+
     // Start is called before the first frame update
     void Start()
     {
