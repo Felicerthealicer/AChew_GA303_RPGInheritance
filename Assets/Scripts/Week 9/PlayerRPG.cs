@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +12,7 @@ public class PlayerRPG : MonoBehaviour
     private bool isAttackReady = true;
 
     public Image attackReadyImage;
+    public TextMeshProUGUI healthText;
 
     // Start is called before the first frame update
     void Start()
@@ -52,6 +52,9 @@ public class PlayerRPG : MonoBehaviour
                     }
                 }
             }
+
+            healthText.text = health.ToString() + "/100";
+
         }
     }
 
@@ -65,6 +68,7 @@ public class PlayerRPG : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
+
 
         if (health <= 0)
         {
