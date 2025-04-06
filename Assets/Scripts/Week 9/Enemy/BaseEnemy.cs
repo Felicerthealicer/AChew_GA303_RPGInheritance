@@ -9,6 +9,8 @@ public class BaseEnemy : MonoBehaviour
     public float attackDamage = 0f;
     public float attackRange = 10f;
 
+    public float bulletDamage = 5f;
+
     private float timer = 0f;
 
     [SerializeField] protected float attackInterval = 1f;
@@ -37,7 +39,15 @@ public class BaseEnemy : MonoBehaviour
         }
     }
 
-    protected virtual void Attack()
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Bullet")
+        {
+            TakeDamage(bulletDamage);
+        }
+    }
+
+    public virtual void Attack()
     {
         player.TakeDamage(attackDamage);
     }
@@ -56,4 +66,7 @@ public class BaseEnemy : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    
+
 }

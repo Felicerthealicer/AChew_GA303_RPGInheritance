@@ -5,8 +5,9 @@ using UnityEngine.UI;
 public class PlayerRPG : MonoBehaviour
 {
     public float health = 100f;
-    public float attackDamage = 5f;
+    public float attackDamage = 10f;
     public float attackInterval = 1f;
+    
 
     private float timer;
     private bool isAttackReady = true;
@@ -53,7 +54,7 @@ public class PlayerRPG : MonoBehaviour
                 }
             }
 
-            healthText.text = health.ToString() + "/100";
+            healthText.text = health.ToString();
 
         }
     }

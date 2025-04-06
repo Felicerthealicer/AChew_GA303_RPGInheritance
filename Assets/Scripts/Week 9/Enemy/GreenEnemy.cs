@@ -2,34 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlimeEnemy : BaseEnemy
+public class GreenEnemy : BaseEnemy
 {
 
-    
+    public AudioSource greenAttackSFX;
+    public AudioSource greenDamageSFX;
+
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
 
-        // Debug.Log("HeeHo I'm the giant slime GIGI!");
-
-
+        // Debug.Log("HeeHo I'm GIGI!");
     }
 
     // Update is called once per frame
-    protected override void Update()
-    {
-        base.Update();
-    }
 
-    protected override void Attack()
+    public override void Attack()
     {
         base.Attack();
-        Debug.Log(this.gameObject.name + " deals " + attackDamage + " damage to you!");
-    }
+        greenAttackSFX.Play();
 
+        //Debug.Log(this.gameObject.name + " deals " + attackDamage + " damage to you!");
+    }
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);
+        greenDamageSFX.Play();
     }
 }
