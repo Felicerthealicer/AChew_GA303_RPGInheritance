@@ -5,7 +5,6 @@ using UnityEngine;
 public class PowerUp : MonoBehaviour
 {
     protected PlayerRPG player;
-    protected Bullet bullet;
 
     public float healthIncrease = 1f;
     public float attackDamageIncrease = 1f;

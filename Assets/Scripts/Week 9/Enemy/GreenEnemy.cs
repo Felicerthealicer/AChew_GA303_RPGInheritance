@@ -21,6 +21,7 @@ public class GreenEnemy : BaseEnemy
     public override void Attack()
     {
         base.Attack();
+        greenAttackSFX.enabled = true;
         greenAttackSFX.Play();
 
         //Debug.Log(this.gameObject.name + " deals " + attackDamage + " damage to you!");
@@ -28,6 +29,7 @@ public class GreenEnemy : BaseEnemy
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);
+        greenDamageSFX.enabled = true;
         greenDamageSFX.Play();
     }
 }

@@ -14,6 +14,7 @@ public class PlayerRPG : MonoBehaviour
 
     public Image attackReadyImage;
     public TextMeshProUGUI healthText;
+    public TextMeshProUGUI attackDmgText;
 
     // Start is called before the first frame update
     void Start()
@@ -55,6 +56,7 @@ public class PlayerRPG : MonoBehaviour
             }
 
             healthText.text = health.ToString();
+            attackDmgText.text = "AtkDmg: " + attackDamage.ToString();   
 
         }
     }

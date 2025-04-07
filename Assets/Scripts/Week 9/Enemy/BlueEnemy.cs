@@ -18,12 +18,14 @@ public class BlueEnemy : BaseEnemy
     public override void Attack()
     {
         base.Attack();
+        blueAttackSFX.enabled = true;
         blueAttackSFX.Play();
     }
 
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);
+        blueDamageSFX.enabled = true;
         blueDamageSFX.Play();
     }
 }
