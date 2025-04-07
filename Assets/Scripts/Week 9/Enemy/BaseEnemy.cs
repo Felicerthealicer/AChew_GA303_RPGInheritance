@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BaseEnemy : MonoBehaviour
 {
@@ -17,10 +18,17 @@ public class BaseEnemy : MonoBehaviour
 
     protected PlayerRPG player;
 
+    protected NavMeshAgent navAgent; 
+        
+    [SerializeField] protected List<Transform> patrolPoints = new List<Transform>();
+    protected int patrolPointIndex = 0;
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerRPG>();
+        navAgent = GetComponent<NavMeshAgent>();
+        navAgent.SetDestination(patrolPoints[patrolPointIndex].position);
     }
 
     // Update is called once per frame
@@ -37,6 +45,11 @@ public class BaseEnemy : MonoBehaviour
                 timer = 0f;
             }
         }
+    }
+
+    protected void PatrolPointReset()
+    {
+        patrolPointIndex++;
     }
 
     private void OnCollisionEnter(Collision other)
@@ -66,7 +79,4 @@ public class BaseEnemy : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-
-    
-
 }
