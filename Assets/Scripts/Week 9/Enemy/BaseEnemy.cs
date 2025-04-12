@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class BaseEnemy : MonoBehaviour
 {
     public float health = 100f;
-    public float speed = 3f;
+    public float speed = 2f;
     public float attackDamage = 0f;
     public float attackRange = 10f;
 
@@ -22,6 +22,9 @@ public class BaseEnemy : MonoBehaviour
         
     [SerializeField] protected List<Transform> patrolPoints = new List<Transform>();
     protected int patrolPointIndex = 0;
+    protected float visionRange = 30f; 
+
+    public bool playerSeen = false;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -35,21 +38,114 @@ public class BaseEnemy : MonoBehaviour
     protected virtual void Update()
     {
         
-        if (Vector3.Distance(this.transform.position, player.transform.position) < attackRange)
+        if (playerSeen == true)
         {
-            timer += Time.deltaTime;
-
-            if (timer >= attackInterval)
+            if (navAgent.remainingDistance < 0.5f) //player in LOS and in visionRange 
             {
-                Attack();
-                timer = 0f;
+                if (Vector3.Distance(this.transform.position, player.transform.position) > visionRange)
+                {
+                    playerSeen = false;
+                }
+                else
+                {
+                    if (LineOfSight() == true)
+                    {
+                        navAgent.SetDestination(player.transform.position);
+                        navAgent.isStopped = false;
+                    }
+                    else
+                    {
+                        playerSeen = false;
+                    }
+                }
+
+            }
+
+            if (Vector3.Distance(this.transform.position, player.transform.position) > attackRange) //player in LOS and in atkRange
+            {
+                if (LineOfSight() == true)
+                {
+                    navAgent.SetDestination(player.transform.position);
+                    navAgent.isStopped = false;
+                }
+            }
+            else
+            {
+                if (LineOfSight() == true)
+                {
+                    navAgent.isStopped = true;
+                    this.transform.LookAt(player.transform.position);
+
+                    timer += Time.deltaTime;
+
+                    if (timer >= attackInterval)
+                    {
+                        Attack();
+                        timer = 0f;
+                    }
+                }
+                else
+                {
+                    navAgent.isStopped = false;
+                }
+            }
+        }
+        else
+        {
+            PatrolPointCounter();
+
+            navAgent.SetDestination(patrolPoints[patrolPointIndex].position);
+        }
+       
+    }
+
+    public void SeePLayer()
+    {
+        RaycastHit hit;
+
+        Vector3 dir = player.transform.position - this.transform.position;
+        dir.Normalize();
+
+        if (Physics.Raycast(this.transform.position, dir, out hit))
+        {
+            if (hit.collider.tag == "Player")
+            {
+                playerSeen = true;
             }
         }
     }
 
-    protected void PatrolPointReset()
+    protected virtual void PatrolPointCounter()
     {
-        patrolPointIndex++;
+        if (navAgent.remainingDistance < 0.5f)
+        {
+            patrolPointIndex++;
+
+            if (patrolPointIndex >= patrolPoints.Count)
+            {
+                patrolPointIndex = 0;
+            }
+        }
+    }
+
+    protected bool LineOfSight()
+    {
+        //raycast bool for enemy LOS 
+        
+        RaycastHit hit;
+
+        Vector3 dir = player.transform.position - this.transform.position;
+        dir.Normalize();
+
+        if(Physics.Raycast (this.transform.position, dir, out hit))
+        {
+            if(hit.collider.tag == "Player")
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void OnCollisionEnter(Collision other)

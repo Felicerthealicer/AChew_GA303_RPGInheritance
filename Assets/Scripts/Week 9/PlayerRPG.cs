@@ -78,4 +78,13 @@ public class PlayerRPG : MonoBehaviour
             Debug.Log("YOU DIED");
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "VisionCone")
+        {
+            other.GetComponentInParent<BaseEnemy>().SeePLayer();
+        }
+    }
+
 }
