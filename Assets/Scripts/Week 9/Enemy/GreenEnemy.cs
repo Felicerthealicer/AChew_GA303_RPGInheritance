@@ -7,17 +7,6 @@ public class GreenEnemy : BaseEnemy
 
     public AudioSource greenAttackSFX;
     public AudioSource greenDamageSFX;
-
-    // Start is called before the first frame update
-    protected override void Start()
-    {
-        base.Start();
-
-        // Debug.Log("HeeHo I'm GIGI!");
-    }
-
-    // Update is called once per frame
-
     public override void Attack()
     {
         base.Attack();

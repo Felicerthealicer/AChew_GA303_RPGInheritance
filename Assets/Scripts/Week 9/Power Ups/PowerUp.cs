@@ -20,13 +20,19 @@ public class PowerUp : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             Power();
-            Destroy(this.gameObject);
         }
     }
 
     protected virtual void Power()
     {
         
-    }    
+    }
+
+    protected void Disable()
+    {
+        this.gameObject.GetComponent<MeshRenderer>().enabled = false;
+        this.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+
+    }
 
 }

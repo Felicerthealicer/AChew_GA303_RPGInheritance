@@ -16,5 +16,6 @@ public class BulletPickUp : PowerUp
     protected override void Power()
     {
         bullet.bulletCount += ammoIncrease;
+        Disable();
     }
 }

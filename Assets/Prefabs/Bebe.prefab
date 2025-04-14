@@ -1185,7 +1185,7 @@ MonoBehaviour:
   health: 20
   speed: 3
   attackDamage: 2
-  attackRange: 2
+  attackRange: 5
   bulletDamage: 5
   attackInterval: 2
   patrolPoints: []

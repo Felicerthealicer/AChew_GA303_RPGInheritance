@@ -7,13 +7,7 @@ public class RedEnemy : BaseEnemy
 
     public AudioSource redAttackSFX;
     public AudioSource redDamageSFX;
-
-    protected override void Start()
-    {
-        base.Start();
-
-        // Debug.Log("HeeHo I'm ARRA");
-    }
+    public AudioSource redNODamageSFX;
 
     public override void Attack()
     {
@@ -29,5 +23,12 @@ public class RedEnemy : BaseEnemy
         redDamageSFX.Play();
     }
 
+    protected override void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Bullet")
+        {
+            redNODamageSFX.Play();
+        }
+    }
 
 }

@@ -7,5 +7,6 @@ public class Water : PowerUp
     protected override void Power()
     {
         player.health += healthIncrease;
+        Disable();
     }    
 }

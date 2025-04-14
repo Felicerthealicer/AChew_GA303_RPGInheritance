@@ -22,7 +22,7 @@ public class BaseEnemy : MonoBehaviour
         
     [SerializeField] protected List<Transform> patrolPoints = new List<Transform>();
     protected int patrolPointIndex = 0;
-    protected float visionRange = 30f; 
+    protected float visionRange = 10f; 
 
     public bool playerSeen = false;
 
@@ -58,7 +58,6 @@ public class BaseEnemy : MonoBehaviour
                         playerSeen = false;
                     }
                 }
-
             }
 
             if (Vector3.Distance(this.transform.position, player.transform.position) > attackRange) //player in LOS and in atkRange
@@ -75,6 +74,7 @@ public class BaseEnemy : MonoBehaviour
                 {
                     navAgent.isStopped = true;
                     this.transform.LookAt(player.transform.position);
+                    navAgent.stoppingDistance = 5f;
 
                     timer += Time.deltaTime;
 
@@ -93,7 +93,6 @@ public class BaseEnemy : MonoBehaviour
         else
         {
             PatrolPointCounter();
-
             navAgent.SetDestination(patrolPoints[patrolPointIndex].position);
         }
        
@@ -148,7 +147,7 @@ public class BaseEnemy : MonoBehaviour
         return false;
     }
 
-    private void OnCollisionEnter(Collision other)
+    protected virtual void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.tag == "Bullet")
         {
@@ -169,6 +168,7 @@ public class BaseEnemy : MonoBehaviour
     public virtual void TakeDamage(float damage)
     {
         health -= damage;
+        this.transform.LookAt(player.transform.position);
 
         if(health <= 0f)
         {

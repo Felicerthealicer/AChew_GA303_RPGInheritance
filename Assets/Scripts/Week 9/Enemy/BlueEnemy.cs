@@ -8,13 +8,6 @@ public class BlueEnemy : BaseEnemy
     public AudioSource blueAttackSFX;
     public AudioSource blueDamageSFX;
 
-    protected override void Start()
-    {
-        base.Start();
-
-        // Debug.Log("HeeHo I'm BEBE!");
-    }
-
     public override void Attack()
     {
         base.Attack();
